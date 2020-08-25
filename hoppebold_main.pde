@@ -1,15 +1,17 @@
 float g = 0.1;
 int maxBSize = 25;
 
-Ball[] balls = new Ball[50];
+int nballs = 4; 
+ArrayList<Ball> balls = new ArrayList<Ball>();
 
 void setup() {
   size(800, 800);
   importIMG();
   ellipseMode(CENTER);
+
   //set balls
-  for (int i = 0; i < balls.length; i++) {
-    balls[i] = new Ball(new PVector(random(width - maxBSize*3), random(height - maxBSize*3)), new PVector(random(1, 4), random (1, 4)), maxBSize);
+  for (int i = 0; i < nballs; i++) {
+    balls.add(new Ball(new PVector(random(width - maxBSize*3), random(maxBSize*3, 400)), new PVector(random(-4, 4), random (-4, 4)), maxBSize));
   }
 }
 
@@ -22,4 +24,24 @@ void draw() {
     b.col();
     b.display();
   }
+
+  drawGround();
+}
+
+void drawGround() {
+  ellipse(width/2, height+100, width, height);
+}
+
+void restart() {
+  balls = new ArrayList();
+  for (int i = 0; i < nballs; i++) {
+    balls.add(new Ball(new PVector(random(width - maxBSize*3), random(maxBSize*3, 400)), new PVector(random(-4, 4), random (-4, 4)), maxBSize));
+  }
+}
+
+void keyPressed() {
+  if (key == 'r')
+    restart();
+  if (key == 'e')
+    balls.add(new Ball(new PVector(random(width - maxBSize*3), random(maxBSize*3, 400)), new PVector(random(-4, 4), random (-4, 4)), maxBSize));
 }
